@@ -24,7 +24,7 @@ final class UnmappedAliasServiceLocatorProxy implements ServiceLocatorInterface
         $this->serviceLocator = $serviceLocator;
     }
 
-    public function get($id)
+    public function get(string $id): mixed
     {
         if ($this->serviceLocator->has($id)) {
             return $this->serviceLocator->get($id);
@@ -33,7 +33,7 @@ final class UnmappedAliasServiceLocatorProxy implements ServiceLocatorInterface
         return $this->serviceLocator->get($this->knownUnmappedAliasToClassServices[$id] ?? $id);
     }
 
-    public function has($id)
+    public function has(string $id): bool
     {
         return $this->serviceLocator->has($id)
             || $this->serviceLocator->has($this->knownUnmappedAliasToClassServices[$id] ?? $id);
@@ -47,7 +47,7 @@ final class UnmappedAliasServiceLocatorProxy implements ServiceLocatorInterface
      *
      * @throws ShouldNotHappenException
      */
-    public function build($name, ?array $options = null)
+    public function build(string $name, ?array $options = null): mixed
     {
         throw new ShouldNotHappenException(\sprintf('Why did you call %s?', __METHOD__));
     }
